@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:port/models/product_model.dart';
 import 'package:port/services/products.dart';
 
 class Home extends StatefulWidget {
@@ -9,7 +10,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   void initState() {
-    Products().getData();
     super.initState();
   }
 
@@ -22,9 +22,7 @@ class _HomeState extends State<Home> {
         backgroundColor: Colors.brown[200],
       ),
       drawer: Drawer(),
-      body: Center(
-        child: Text('Hello world'),
-      ),
+      body:ListView.builder(itemBuilder: null)
     ));
   }
 }
