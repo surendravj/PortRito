@@ -23,16 +23,36 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('PortRito'),
-          backgroundColor: Colors.brown[200],
-        ),
-        drawer: Drawer(),
-        body: ListView.builder(
-            itemBuilder: (ctx, i) {return ProductItem(_products[i]);},
-            itemCount: _products.length),
+    return Scaffold(
+      backgroundColor:Colors.white,
+      appBar: AppBar(
+        backgroundColor: Color(0xff2B3252),
+        title: Text('Explore',style:TextStyle(
+          fontFamily:'RobotoCondensed'
+        ),),
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(
+                Icons.shopping_cart,
+                color: Colors.white,
+              ),
+              onPressed: null),
+        ],
+      ),
+      drawer: Drawer(),
+      body: Column(
+        children: <Widget>[
+          SizedBox(height:10,),
+          Container(
+            height:780,
+            child: ListView.builder(
+              itemBuilder: (ctx, i){
+                return ProductItem(_products[i]);
+              },
+              itemCount: _products.length,
+            ),
+          ),
+        ],
       ),
     );
   }

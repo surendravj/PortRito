@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
           value: Products(),
         ),
       ],
-      child: MaterialApp(home: Home()),
+      child: MaterialApp(debugShowCheckedModeBanner:false,home: Home()),
     );
   }
 }
