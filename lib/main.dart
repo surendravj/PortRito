@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:port/services/products.dart';
+import 'package:port/screens/product_detail_screen.dart';
 import 'package:provider/provider.dart';
 
+import 'models/product_model.dart';
 import 'screens/home_screen.dart';
 
 void main() {
@@ -14,10 +15,17 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
-          value: Products(),
+          value: ProductsList(),
         ),
+        
       ],
-      child: MaterialApp(debugShowCheckedModeBanner:false,home: Home()),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        routes: {
+          '/':(ctx)=>Home(),
+          ProductDetails.routeName: (ctx) => ProductDetails(),
+        },
+      ),
     );
   }
 }
