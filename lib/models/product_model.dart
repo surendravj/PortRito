@@ -10,8 +10,10 @@ class ProductModel with ChangeNotifier {
   final bool isPuchased;
   final String rating;
   final String id;
+  final String description;
+  final String dimensions;
   ProductModel(this.name, this.imagePath, this.price, this.quantity,
-      this.typeOfPortrait, this.isPuchased, this.rating, this.id);
+      this.typeOfPortrait, this.isPuchased, this.rating, this.id,this.description,this.dimensions);
 }
 
 class ProductsList with ChangeNotifier {
