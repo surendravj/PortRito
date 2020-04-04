@@ -6,23 +6,27 @@ import 'screens/home_screen.dart';
 import 'package:flutter/services.dart';
 
 void main() {
-    runApp(MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => MultiProvider(
-        providers: [
-          ChangeNotifierProvider.value(
-            value: ProductsList(),
-          ),
-        ],
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          routes: {
-            '/': (ctx) => Home(),
-            ProductDetails.routeName: (ctx) => ProductDetails(),
-          },
+  Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(
+          value: ProductsList(),
         ),
-      );
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        routes: {
+          '/': (ctx) => Home(),
+          ProductDetails.routeName: (ctx) => ProductDetails(),
+        },
+      ),
+    );
+  }
 }

@@ -120,11 +120,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 width: 400,
                                 child: Text(
                                   _product.name,
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w800,
-                                      fontFamily: 'RobotoCondensed-Light'),
+                                  style: buildTextStyle(Colors.black, 20,
+                                      FontWeight.w600, 'RobotoCondensed-Bold'),
                                 ),
                               ),
                             ],
@@ -137,11 +134,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                               SizedBox(width: 5),
                               Text(
                                 'Description:-',
-                                style: TextStyle(
-                                    decoration: TextDecoration.underline,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: 'RobotoCondensed'),
+                                style: buildTextStyle(Colors.black, 12,
+                                        FontWeight.w500, 'RobotoCondensed')
+                                    .copyWith(
+                                        decoration: TextDecoration.underline),
                               ),
                             ],
                           ),
@@ -154,26 +150,21 @@ class _ProductDetailsState extends State<ProductDetails> {
                               Container(
                                 width: 400,
                                 alignment: Alignment.centerLeft,
-                                child: Text(_product.description,
-                                    style: TextStyle(
-                                        fontSize: 13,
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.w400,
-                                        fontFamily: 'RobotoCondensed')),
+                                child: Text(
+                                  _product.description,
+                                  style: buildTextStyle(Colors.grey, 13,
+                                      FontWeight.w400, 'RobotoCondensed'),
+                                ),
                               ),
                             ],
                           ),
                           SizedBox(height: 5),
                           Row(
                             children: <Widget>[
-                              SizedBox(width: 15),
                               Text(
                                 'Size',
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.red[100],
-                                    fontWeight: FontWeight.w600,
-                                    fontFamily: 'RobotoCondensed'),
+                                style: buildTextStyle(Colors.red[200], 15,
+                                    FontWeight.w600, 'RobotoCondensed-Bold'),
                               ),
                               SizedBox(width: 10),
                               Container(
@@ -185,14 +176,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     borderRadius: BorderRadius.circular(12)),
                                 child: Text(
                                   _product.dimensions,
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w400,
-                                      fontFamily: 'RobotoCondensed'),
+                                  style: buildTextStyle(Colors.black, 13,
+                                      FontWeight.w400, 'RobotoCondensed'),
                                 ),
                               ),
                               SizedBox(
-                                width: 50,
+                                width: 25,
                               ),
                               Rating().buildRow(_product.rating),
                             ],
@@ -204,13 +193,16 @@ class _ProductDetailsState extends State<ProductDetails> {
                               FlatButton.icon(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5),
-                                  side: BorderSide(color: Colors.black),
+                                  side: !withFrame
+                                      ? BorderSide(color: Colors.black)
+                                      : BorderSide(color: Colors.teal[200]),
                                 ),
-                                color: Colors.white,
+                                color:
+                                    withFrame ? Colors.teal[200] : Colors.white,
                                 textColor: Colors.black,
                                 onPressed: () {
                                   setState(() {
-                                    withFrame = true;
+                                    withFrame = !withFrame;
                                   });
                                 },
                                 icon: Icon(Icons.filter_frames),
@@ -219,10 +211,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                               SizedBox(width: 5),
                               Text(
                                 'Extra Cost 200/-',
-                                style: TextStyle(
-                                    color: Colors.red[300],
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'RobotoCondensed'),
+                                style: buildTextStyle(Colors.red[200], 12,
+                                    FontWeight.w400, 'RobotoCondensed-Bold'),
                               ),
                             ],
                           )
@@ -292,5 +282,11 @@ class _ProductDetailsState extends State<ProductDetails> {
         ),
       ),
     );
+  }
+
+  TextStyle buildTextStyle(
+      Color colors, double size, FontWeight weight, String family) {
+    return TextStyle(
+        color: colors, fontSize: size, fontWeight: weight, fontFamily: family);
   }
 }
