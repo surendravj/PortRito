@@ -14,7 +14,7 @@ description: A new Flutter project.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -46,9 +46,33 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/logo.png
+    - assets/images/Captain_Marvel (Avengers).jpeg
+    - assets/images/Docter-Strange (Avengers).jpeg
+    - assets/images/Drake-(Rapper).jpg
+    - assets/images/IMG-20190319-WA0011.jpg
+    - assets/images/John_Wick.jpeg
+    - assets/images/Nazriya_Nazim.jpg
+    - assets/images/NTR_Lavakusa.jpeg
+    - assets/images/Pooja_Hedge.jpg
+    - assets/images/RajiniKanth_Thaliva.jpg
+    - assets/images/Rashi_Kanna.jpg
+    - assets/images/SS_Rajamouli.jpg
+    - assets/images/Tom_Holland(Peter Parker).jpg
+    - assets/images/WhatsApp Image 2020-03-28 at 16.25.12.jpeg
+    - assets/images/WhatsApp Image 2020-03-28 at 16.27.39.jpeg
+    - assets/images/WhatsApp Image 2020-03-28 at 16.29.01.jpeg
+    - assets/images/WhatsApp Image 2020-03-28 at 16.29.02.jpeg
+    - assets/images/WhatsApp Image 2020-03-28 at 16.29.05.jpeg
+    - assets/images/WhatsApp Image 2020-03-28 at 16.29.54.jpeg
+    - assets/images/WhatsApp Image 2020-03-28 at 16.30.30.jpeg
+    - assets/images/WhatsApp Image 2020-03-28 at 16.31.14.jpeg
+
+
+
+
+    
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

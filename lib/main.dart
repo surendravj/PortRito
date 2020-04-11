@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:port/screens/product_detail_screen.dart';
+import 'package:port/services/favourite.dart';
+import 'package:port/screens/favourite_screen.dart';
+import 'package:port/screens/wrapper.dart';
+import 'package:port/services/auth.dart';
 import 'package:provider/provider.dart';
 import 'models/product_model.dart';
-import 'screens/home_screen.dart';
 import 'package:flutter/services.dart';
+import 'models/user_model.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,12 +22,16 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: ProductsList(),
         ),
+        StreamProvider<UserModel>.value(value: Auth().userStatus),
+        ChangeNotifierProvider.value(
+          value: Favoruites(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         routes: {
-          '/': (ctx) => Home(),
-          ProductDetails.routeName: (ctx) => ProductDetails(),
+          '/': (ctx) => Wrapper(),
+          UserFavourites.routeName: (ctx) => UserFavourites(),
         },
       ),
     );

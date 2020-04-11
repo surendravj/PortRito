@@ -12,8 +12,17 @@ class ProductModel with ChangeNotifier {
   final String id;
   final String description;
   final String dimensions;
-  ProductModel(this.name, this.imagePath, this.price, this.quantity,
-      this.typeOfPortrait, this.isPuchased, this.rating, this.id,this.description,this.dimensions);
+  ProductModel(
+      this.name,
+      this.imagePath,
+      this.price,
+      this.quantity,
+      this.typeOfPortrait,
+      this.isPuchased,
+      this.rating,
+      this.id,
+      this.description,
+      this.dimensions);
 }
 
 class ProductsList with ChangeNotifier {
@@ -27,4 +36,5 @@ class ProductsList with ChangeNotifier {
   ProductModel getProduct(String id) {
     return _products.firstWhere((element) => element.id == id);
   }
+
 }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:port/models/product_model.dart';
+import 'package:port/models/user_model.dart';
+import 'package:port/services/user.dart';
+import 'package:port/widgets/drawer.dart';
 import 'package:port/widgets/product_item.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -12,8 +15,18 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   bool isLoading = true;
   List<ProductModel> _products = [];
+  UserModel uid;
+  User _user;
+  bool drawerLoad = true;
   @override
   void initState() {
+    uid = Provider.of<UserModel>(context, listen: false);
+    UserDb(uid.uid).getUser().then((value) {
+      setState(() {
+        _user = value;
+        drawerLoad = false;
+      });
+    });
     Provider.of<ProductsList>(context, listen: false)
         .getProducts()
         .then((value) {
@@ -44,7 +57,11 @@ class _HomeState extends State<Home> {
               onPressed: null),
         ],
       ),
-      drawer: Drawer(),
+      drawer: Drawer(
+        child: drawerLoad
+            ? CircularProgressIndicator()
+            : SideDrawer(_user.name, _user.phNumber),
+      ),
       body: isLoading
           ? SpinKitWave(
               color: Color(0xff2B3252),
@@ -58,7 +75,10 @@ class _HomeState extends State<Home> {
                   height: 780,
                   child: ListView.builder(
                     itemBuilder: (ctx, i) {
-                      return ProductItem(_products[i]);
+                      return ChangeNotifierProvider.value(
+                        value: _products[i],
+                        child: ProductItem(_products[i]),
+                      );
                     },
                     itemCount: _products.length,
                   ),
