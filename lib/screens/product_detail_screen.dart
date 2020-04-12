@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 class ProductDetails extends StatefulWidget {
   final String id;
-
+  static const routeName='/productDetails';
   const ProductDetails(this.id);
   @override
   _ProductDetailsState createState() => _ProductDetailsState();

@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:port/models/product_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -15,16 +15,16 @@ class Favourite {
 }
 
 class Favoruites with ChangeNotifier {
+  bool status = false;
   List<Favourite> _list = [];
-  bool checkFavoruiteStatus = false;
   final CollectionReference _collectionReference =
       Firestore.instance.collection('Favoruites');
 
   Future<bool> checkFavouritesStatus(String userUid) async {
     await _collectionReference.document(userUid).get().then((value) {
-      checkFavoruiteStatus = value.exists;
+      status = value.exists;
     });
-    return checkFavoruiteStatus;
+    return status;
   }
 
   Future<bool> isFavoruite(String userUid, String uid) async {
