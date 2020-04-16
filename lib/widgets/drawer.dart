@@ -59,11 +59,12 @@ class SideDrawer extends StatelessWidget {
                 height: 15,
               ),
               rowWithName(
-                  context, Icons.shopping_cart, 'Shoping cart', '/shopingCart'),
+                  context, Icons.shopping_cart, 'My cart', '/cart'),
+              SizedBox(height: 15),
               Divider(),
               rowWithName(context, Icons.favorite, 'My favorites',
                   UserFavourites.routeName),
-              SizedBox(height: 30),
+              SizedBox(height: 15),
               rowWithName(context, Icons.settings, 'Settings', '/settings'),
               SizedBox(
                 height: 15,

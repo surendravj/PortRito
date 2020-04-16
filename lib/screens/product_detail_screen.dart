@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:port/constants/rating.dart';
 import 'package:port/models/product_model.dart';
+import 'package:port/services/cart.dart';
 import 'package:port/services/favourite.dart';
 import 'package:port/models/user_model.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetails extends StatefulWidget {
   final String id;
-  static const routeName='/productDetails';
+  static const routeName = '/productDetails';
   const ProductDetails(this.id);
   @override
   _ProductDetailsState createState() => _ProductDetailsState();
@@ -18,6 +19,8 @@ class _ProductDetailsState extends State<ProductDetails> {
   bool frameStatus = false;
   UserModel user;
   ProductModel _product;
+
+  bool isElementExist = false;
   @override
   void initState() {
     user = Provider.of<UserModel>(context, listen: false);
@@ -28,6 +31,11 @@ class _ProductDetailsState extends State<ProductDetails> {
         .then((value) {
       setState(() {
         isFav = value;
+      });
+    });
+    ShoppingCart().isItemExist(_product.id, user.uid).then((value) {
+      setState(() {
+        isElementExist = value;
       });
     });
     super.initState();
@@ -92,12 +100,12 @@ class _ProductDetailsState extends State<ProductDetails> {
       alignment: Alignment.center,
       child: Container(
         width: 300,
-        height: 400,
+        height: 350,
         child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18),
           ),
-          elevation: 15,
+          elevation: 25,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(18),
             child: Image.asset(
@@ -110,11 +118,12 @@ class _ProductDetailsState extends State<ProductDetails> {
     );
 
     // nameTag
-    final nameTag = Text(
+    final nameTag = FittedBox(
+        child: Text(
       _product.name,
       style: commonTextStyle(23, FontWeight.w600, Colors.black)
           .copyWith(fontFamily: 'RobotoCondensed'),
-    );
+    ));
 
     // stockIndicator
     final stockIndicator = _product.quantity == '0'
@@ -150,10 +159,18 @@ class _ProductDetailsState extends State<ProductDetails> {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(18.0),
           side: BorderSide(color: Colors.black)),
-      onPressed: () {},
+      onPressed: () {
+        if (!isElementExist) {
+          setState(() {
+            isElementExist = true;
+          });
+          ShoppingCart().addItemToCart(user.uid, _product, frameStatus);
+        }
+      },
       color: Colors.black,
       textColor: Colors.white,
-      child: commonText('Order now', 15, FontWeight.w600, Colors.white),
+      child: commonText(isElementExist ? 'In Cart' : 'Add to cart', 15,
+          FontWeight.w600, Colors.white),
     );
 
     //frameNotice for extra notice
@@ -183,7 +200,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           children: <Widget>[
             topBar,
             Container(
-              height: 710,
+              height:710,
               child: ListView(
                 children: <Widget>[
                   imageHolder,
@@ -205,8 +222,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ],
               ),
             ),
-            SizedBox(height: 5),
-            commonRow(priceTag, 190, orderTag),
+            commonRow(priceTag, 180, orderTag),
           ],
         ),
       ),

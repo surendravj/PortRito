@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter/services.dart';
+import 'package:port/constants/loader.dart';
 import 'package:port/models/user_model.dart';
 import 'package:port/services/favourite.dart';
 import 'package:port/widgets/favourite_item.dart';
@@ -12,11 +13,11 @@ class UserFavourites extends StatefulWidget {
 }
 
 class _UserFavouritesState extends State<UserFavourites> {
-  @override
   List<Favourite> _list;
   UserModel user;
   bool isLoading = true;
   bool isFavExist = true;
+  int favLength = 0;
   void initState() {
     user = Provider.of<UserModel>(context, listen: false);
     Provider.of<Favoruites>(context, listen: false)
@@ -28,6 +29,7 @@ class _UserFavouritesState extends State<UserFavourites> {
             .then((value) {
           setState(() {
             _list = value;
+            favLength = _list.length;
             isLoading = false;
           });
         });
@@ -37,15 +39,22 @@ class _UserFavouritesState extends State<UserFavourites> {
         });
       }
     });
+
     super.initState();
   }
 
-  removeItem(String id) {
-    _list.removeWhere((element) => element.productUid == id);
+  void removeItem(String productId) {
+    _list.removeWhere((element) => element.productUid == productId);
+    setState(() {});
+    Provider.of<Favoruites>(context, listen: false)
+        .removeFavoruiteFromDb(productId, user.uid);
   }
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: Color(0xff2B3252),
+        statusBarIconBrightness: Brightness.light));
     final noFavouritesNotice = Container(
       height: 700,
       child: Center(
@@ -69,25 +78,63 @@ class _UserFavouritesState extends State<UserFavourites> {
         ),
       ),
     );
+    final topBar = Container(
+      padding: EdgeInsets.all(10),
+      height: 100,
+      child: Card(
+          elevation: 8,
+          child: Row(
+            children: <Widget>[
+              IconButton(
+                icon: Icon(Icons.close),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+              SizedBox(width: 70),
+              Text(
+                'My Favourites',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              SizedBox(width: 80),
+              Tooltip(
+                message: 'Cart size',
+                child: Chip(
+                  label: Text(
+                    '$favLength',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  backgroundColor: Colors.orange[300],
+                ),
+              ),
+              SizedBox(width: 5)
+            ],
+          )),
+    );
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xff2B3252),
-        title: Text('Favourites'),
-        centerTitle: true,
-      ),
       body: SafeArea(
-        child: isFavExist
-            ? isLoading
-                ? SpinKitWave(
-                    color: Color(0xff2B3252),
-                  )
-                : ListView.builder(
-                    itemBuilder: (ctx, i) {
-                      return FavouriteItem(_list[i]);
-                    },
-                    itemCount: _list.length,
-                  )
-            : noFavouritesNotice,
+        child: Column(
+          children: <Widget>[
+            topBar,
+            isFavExist
+                ? Container(
+                    height: 700,
+                    child: isLoading
+                        ? Loader('Preparing Favourites')
+                        : _list.length == 0
+                            ? noFavouritesNotice
+                            : ListView.builder(
+                                itemBuilder: (ctx, i) {
+                                  return FavouriteItem(_list[i], removeItem);
+                                },
+                                itemCount: _list.length,
+                              ))
+                : noFavouritesNotice,
+          ],
+        ),
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:port/screens/shopping_cart_screen.dart';
 import 'package:port/services/favourite.dart';
 import 'package:port/screens/favourite_screen.dart';
 import 'package:port/screens/wrapper.dart';
@@ -29,9 +30,10 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
+	home:Wrapper(),
         routes: {
-          '/': (ctx) => Wrapper(),
           UserFavourites.routeName: (ctx) => UserFavourites(),
+          ShoppingCartScreen.routeName:(ctx)=>ShoppingCartScreen()
         },
       ),
     );

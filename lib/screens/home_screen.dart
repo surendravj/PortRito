@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:port/constants/loader.dart';
 import 'package:port/models/product_model.dart';
 import 'package:port/models/user_model.dart';
 import 'package:port/services/user.dart';
 import 'package:port/widgets/drawer.dart';
 import 'package:port/widgets/product_item.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+
+import 'shopping_cart_screen.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -54,8 +56,8 @@ class _HomeState extends State<Home> {
                 Icons.shopping_cart,
                 color: Colors.white,
               ),
-              onPressed: null),
-        ],
+              onPressed:()=>Navigator.of(context).pushNamed(ShoppingCartScreen.routeName),
+          ),],
       ),
       drawer: Drawer(
         child: drawerLoad
@@ -63,9 +65,7 @@ class _HomeState extends State<Home> {
             : SideDrawer(_user.name, _user.phNumber),
       ),
       body: isLoading
-          ? SpinKitWave(
-              color: Color(0xff2B3252),
-            )
+          ? Loader('Loading...')
           : Column(
               children: <Widget>[
                 SizedBox(

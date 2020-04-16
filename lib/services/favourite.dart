@@ -89,4 +89,13 @@ class Favoruites with ChangeNotifier {
     });
     return _list;
   }
+
+  Future<void> removeFavoruiteFromDb(String productId, String userUid) async {
+    var _list = [];
+    await _collectionReference.document(userUid).get().then((value) {
+      _list = value.data['data'];
+    });
+    _list.removeWhere((element) => element['productId'] == productId);
+    await _collectionReference.document(userUid).updateData({'data': _list});
+  }
 }

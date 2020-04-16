@@ -19,7 +19,7 @@ class Auth {
     try {
       final AuthResult authResult = await _firebaseAuth.signInAnonymously();
       final FirebaseUser user = authResult.user;
-      User(user.uid, name, phNumber, []).addUser();
+      User(user.uid, name, phNumber).addUser();
       return getUser(user);
     } catch (e) {
       print(e.toString());

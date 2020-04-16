@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:port/services/auth.dart';
-import 'package:port/widgets/loader.dart';
 
 class LoginPage extends StatefulWidget {
   static String tag = 'login-page';
@@ -98,7 +97,8 @@ class _LoginPageState extends State<LoginPage> {
         onPressed: validatetForm,
         padding: EdgeInsets.all(12),
         color: Colors.lightBlueAccent,
-        child: Text('Log In', style: TextStyle(color: Colors.white)),
+        child: Text(isLoading ? 'Logging in ' : 'Log In',
+            style: TextStyle(color: Colors.white)),
       ),
     );
 
@@ -116,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                 alignment: Alignment.center,
                 width: 70,
                 height: 70,
-                child: isLoading ? FlipLoader() : Text(""),
+                child: isLoading ? CircularProgressIndicator() : Text(""),
               ),
               SizedBox(height: 48.0),
               email,
